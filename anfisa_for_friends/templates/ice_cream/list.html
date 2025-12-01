@@ -11,8 +11,7 @@
         <div class="card">
           <img class="img-fluid card-img-top"
                src="{% static 'img/image-holder.png' %}"
-               alt="{{ ice_cream.title }}"
-               style="height: 400px; width: 300px; object-fit: cover;">
+               alt="{{ ice_cream.title }}">
           <div class="card-body">
             <h5 class="card-title">{{ ice_cream.title }}</h5>
             <p class="card-text">{{ ice_cream.description|truncatewords:10 }}</p>
