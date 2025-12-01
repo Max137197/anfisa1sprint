@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
+# Демонстрационные данные мороженого
 ice_cream_catalog = [
     {
         'id': 0,
@@ -20,14 +21,18 @@ ice_cream_catalog = [
     },
 ]
 
+def ice_cream_list(request):
+    # Отображаем каталог мороженого
+    context = {'ice_cream_list': ice_cream_catalog}
+    return render(request, 'ice_cream/list.html', context)
 
 def ice_cream_detail(request, pk):
-    template = 'ice_cream/detail.html'
-    context = {'ice_cream': ice_cream_catalog[pk]}
-    return render(request, template, context)
-
-
-def ice_cream_list(request):
-    template = 'ice_cream/list.html'
-    context = {'ice_cream_list': ice_cream_catalog}
-    return render(request, template, context)
+    # Отображаем подробности выбранного мороженого
+    try:
+        ice_cream = next(item for item in ice_cream_catalog if item['id'] == pk)
+    except StopIteration:
+        # Если не найден, возвращаем 404
+        from django.http import Http404
+        raise Http404("Ice cream not found")
+    context = {'ice_cream': ice_cream}
+    return render(request, 'ice_cream/detail.html', context)
