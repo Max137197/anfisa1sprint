@@ -1,22 +1,19 @@
 import os
 from pathlib import Path
 
-# Путь к корню проекта
+# Путь к корню проекта (где лежит manage.py: ANFISA1SPRINT)
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Путь к папке с шаблонами
-TEMPLATES_DIR = BASE_DIR / 'anfisa1sprint' / 'anfisa_for_friends' / 'templates'
-
-# Безопасный ключ (замените на свой)
+# Секретный ключ (для учебного проекта можно оставить так,
+# в продакшене нужно выносить в переменные окружения)
 SECRET_KEY = 'django-insecure-oy%f52n92s=%3&b3dh&h)f(b4ag^_z*&3w+ooo!sy-g=449bwn'
 
-# Режим отладки (для разработки True)
+# Режим отладки
 DEBUG = True
 
-# Разрешённые хосты (для разработки можно оставить пустым)
 ALLOWED_HOSTS = []
 
-# Приложения, установленные в проекте
+# Приложения проекта
 INSTALLED_APPS = [
     'anfisa_for_friends.homepage.apps.HomepageConfig',
     'anfisa_for_friends.ice_cream.apps.IceCreamConfig',
@@ -29,8 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
-
-# Промежуточное ПО (middleware)
+# Middleware
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -41,19 +37,21 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# Корневой файл маршрутизации URL
+# Корневой urls
 ROOT_URLCONF = 'anfisa_for_friends.urls'
 
-# Конфигурация шаблонов (templates)
+# Папка с шаблонами: ANFISA1SPRINT/templates
+TEMPLATES_DIR = BASE_DIR / 'templates'
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [TEMPLATES_DIR],  # Здесь указываем путь к вашим шаблонам
+        'DIRS': [TEMPLATES_DIR],  # ищем шаблоны в папке templates на уровне manage.py
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
-                'django.template.context_processors.request',  # для удобства в шаблонах
+                'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
@@ -61,10 +59,10 @@ TEMPLATES = [
     },
 ]
 
-# WSGI-приложение
+# WSGI
 WSGI_APPLICATION = 'anfisa_for_friends.wsgi.application'
 
-# Настройка базы данных
+# База данных (SQLite по умолчанию)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -72,12 +70,20 @@ DATABASES = {
     }
 }
 
-# Проверка пароля
+# Валидаторы паролей
 AUTH_PASSWORD_VALIDATORS = [
-    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',},
-    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',},
-    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',},
-    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',},
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
 ]
 
 # Локализация
@@ -87,19 +93,19 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-# Настройки статики (CSS, JS, картинки)
+# Статика: папка static_dev рядом с manage.py
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     BASE_DIR / 'static_dev',
 ]
 
+# Куда собирать статику при деплое
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# Для медиа-файлов (если будут загружаться картинки пользователями)
+# Медиа (если будут)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# Стандартное поле авто-идентификатора
+# Тип поля авто‑id
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
