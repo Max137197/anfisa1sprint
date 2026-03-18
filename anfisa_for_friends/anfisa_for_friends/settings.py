@@ -1,11 +1,10 @@
 import os
 from pathlib import Path
 
-# Путь к корню проекта (где лежит manage.py: ANFISA1SPRINT)
+# Путь к корню проекта (где лежит manage.py)
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Секретный ключ (для учебного проекта можно оставить так,
-# в продакшене нужно выносить в переменные окружения)
+# Секретный ключ
 SECRET_KEY = 'django-insecure-oy%f52n92s=%3&b3dh&h)f(b4ag^_z*&3w+ooo!sy-g=449bwn'
 
 # Режим отладки
@@ -31,6 +30,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',  # <-- ДОБАВЛЕНО (сразу после SessionMiddleware)
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -41,13 +41,13 @@ MIDDLEWARE = [
 # Корневой urls
 ROOT_URLCONF = 'anfisa_for_friends.urls'
 
-# Папка с шаблонами: ANFISA1SPRINT/templates
+# Папка с шаблонами
 TEMPLATES_DIR = BASE_DIR / 'templates'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [TEMPLATES_DIR],  # ищем шаблоны в папке templates на уровне manage.py
+        'DIRS': [TEMPLATES_DIR],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -63,7 +63,7 @@ TEMPLATES = [
 # WSGI
 WSGI_APPLICATION = 'anfisa_for_friends.wsgi.application'
 
-# База данных (SQLite по умолчанию)
+# База данных
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -88,23 +88,20 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # Локализация
-LANGUAGE_CODE = 'ru-RU'
+LANGUAGE_CODE = 'ru'  # <-- ИСПРАВЛЕНО (было 'ru-RU')
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-# Статика: папка static_dev рядом с manage.py
+# Статика
 STATIC_URL = '/static/'
-
 STATICFILES_DIRS = [
     BASE_DIR / 'static_dev',
 ]
-
-# Куда собирать статику при деплое
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# Медиа (если будут)
+# Медиа
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
